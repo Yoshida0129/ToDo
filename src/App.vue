@@ -7,8 +7,8 @@
 
 <script>
 export default {
-  name: 'App',
-  newItemTitle: ''
+  name: 'App'
+  
 }
 </script>
 
