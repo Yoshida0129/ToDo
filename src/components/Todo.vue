@@ -1,32 +1,36 @@
 <template>
   <div id='todo'>
-    <input type="text" v-model="newItemTitle" v-on:keyup.enter='addTodo(newItemTitle)'/>
-    <input type="button" v-on:click='allClear()' value="AllClear">
-    <input type="button" v-on:click='removeTodo()' value=selectRemove><br>
-    <div>
-      <input type="button" v-on:click='changeTodo("Complated!")' value="Complated!">
-      <input type="button" v-on:click='changeTodo("In progress")' value="In progress">
-      <input type="button" v-on:click='changeTodo("Icebox")' value="Icebox">
-      <input type="button" v-on:click='changeTodo("Todo")' value="Todo">
+    <div class='container'>
+      <input type="text" v-model="newItemTitle" v-on:keyup.enter='addTodo(newItemTitle)'/><br>
+      <input type="button" v-on:click='allClear()' value="AllClear">
+      <input type="button" v-on:click='removeTodo()' value=selectRemove>
+      <br>
+      <div class='tool'>
+        <input type="button" v-on:click='changeTodo("Complated!")' value="Complated!">
+        <input type="button" v-on:click='changeTodo("Running")' value="Running">
+        <input type="button" v-on:click='changeTodo("Todo")' value="Todo">
+      </div>
     </div>
-    <form name='todo-list'>
+    <table class='todoList'>
       <tr>
-        <th>select</th>
-        <th>name</th>
-        <th>status</th>
+        <th class='select'>Select</th>
+        <th class='name'><input type="button" v-on:click='sort()' value='Name'></th>
+        <th class='status'><input type="button" v-on:click='sort()' value='Status'></th>
       </tr>
-      <tr v-for="(item) in items" :key='item.title'>
-        <td><input type='checkbox' v-model=item.select></td>
-        <td>
+      <tr v-for="(item) in items" :key='item.title' class='record'>
+        <td class='select'>
           <label>
-            {{ item.title }}
+            <input type='checkbox' v-model=item.select>
           </label>
         </td>
-        <td>
+        <td class='name'>
+          {{ item.title }}
+        </td>
+        <td class='status'>
           {{item.status}}
         </td>
       </tr>
-    </form>
+    </table>
   </div>
 </template>
 
@@ -37,45 +41,111 @@ export default{
   data: () => {
     return {
       newItemTitle: '',
-      items: [
-        {select:true, title: '領収書を準備する', status: 'Complated!'  },
-        {select:false, title: 'ピザを注文する', status: 'Icebox' }
-        ]
-      }
-    },
+      items:[]
+    }
+  },
+  mounted() {
+    this.items = JSON.parse(localStorage.getItem('items')) || [];
+  },
   methods: {
+    saveItem: function(){
+      localStorage.setItem('items', JSON.stringify(this.items));
+    },
     addTodo: function(newTitle){
-      if(newTitle!=''){
+      if(newTitle != ''){
       this.items.push(
-        { select:false, title: newTitle, status:'Todo' }
+          { select:false, title: newTitle, status:'Todo' }
         );
       this.newItemTitle = '';
+      this.saveItem();
       }
     },
     changeTodo: function(text){
-      var a = this.items.filter(function(item){
+      var isChecked = this.items.filter(function(item){
         return item.select === true;
       })
-      for(var i=0;i<a.length;i++){
-        a[i].status = text;
+      for(var i=0;i<isChecked.length;i++){
+        isChecked[i].status = text;
+        isChecked[i].select = false;
       }
+      this.saveItem();
     },
     removeTodo: function(){
       this.items = this.items.filter(function(item){
         return item.select === false;
       })
+      this.saveItem();
     },
     allClear:function(index){
       this.items.splice(index);
+      this.saveItem();
+    },
+    sort:function(column){
+      this.items.sort(function(a,b){
+        return (a.status > b.status) ? -1:1;
+      });
+      this.saveItem();
     }
   }
 }
 </script>
 
 <style lang='scss'>
-  .todo-list{
-    li{
-      list-style:none;
+@mixin button-init(){
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container{
+  margin-bottom: 5%;
+}
+#todo{
+  display: flex;
+  flex-direction: column;
+  .todoList{
+    margin:0 5%;
+    .select{
+      width:20%;
+      label{
+        display: block;
+      }
+      td input{
+        @include button-init();
+      }      
+    }
+    .name{
+      input{
+        @include button-init();
+      }
+      width: 40%;
+    }
+    .status{
+      input{
+        @include button-init();
+      }      
+      width: 20%;
+    }
+    .record{
+      :hover{
+        background-color: #EEE;
+      }
+    }
+    th{
+      padding: 10px;
+      border-bottom:solid 2px #CCC;
+    }
+    td{
+      padding: 5px;      
+      border-bottom:solid 1px #CCC;
     }
   }
+}
 </style>
