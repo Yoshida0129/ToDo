@@ -1,21 +1,23 @@
 <template>
   <div id='todo'>
     <div class='container'>
-      <input type="text" v-model="newItemTitle" v-on:keyup.enter='addTodo(newItemTitle)'/><br>
-      <input type="button" v-on:click='allClear()' value="AllClear">
-      <input type="button" v-on:click='removeTodo()' value=selectRemove>
-      <br>
-      <div class='tool'>
-        <input type="button" v-on:click='changeTodo("Complated!")' value="Complated!">
-        <input type="button" v-on:click='changeTodo("Running")' value="Running">
-        <input type="button" v-on:click='changeTodo("Todo")' value="Todo">
+      <input type="text" v-model="newItemTitle" v-on:keyup.enter='addTodo(newItemTitle)' name='addText' value='a'/>
+      <div class='command'>
+        <input type="button" v-on:click='allClear()' value="AllClear">
+        <input type="button" v-on:click='removeTodo()' value=selectRemove>
+        <br>
+        <div>
+          <input type="button" v-on:click='changeTodo("Complated!")' value="Complated!">
+          <input type="button" v-on:click='changeTodo("Running")' value="Running">
+          <input type="button" v-on:click='changeTodo("Todo")' value="Todo">
+        </div>
       </div>
     </div>
     <table class='todoList'>
       <tr>
         <th class='select'>Select</th>
-        <th class='name'><input type="button" v-on:click='sort()' value='Name'></th>
-        <th class='status'><input type="button" v-on:click='sort()' value='Status'></th>
+        <th class='name'>Name</th>
+        <th class='status'><input type="button" v-on:click='sort("status")' value='Status'></th>
       </tr>
       <tr v-for="(item) in items" :key='item.title' class='record'>
         <td class='select'>
@@ -104,8 +106,21 @@ export default{
   padding: 0;
   box-sizing: border-box;
 }
+button, input, select, textarea {
+font-family :inherit;
+font-size :100%;
+font-weight :inherit; 
+}
 .container{
   margin-bottom: 5%;
+  input[type="text"]{
+    margin:1% 0 2% 0;
+  }
+  input[type="button"]{
+    width:10%;
+    margin:0.5%;
+    box-shadow: 0.5% 0.1% #CCC;
+  }
 }
 #todo{
   display: flex;
