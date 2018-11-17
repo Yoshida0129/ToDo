@@ -4,8 +4,28 @@
 ## コメント
 
 ``` bash
+# コメント
+dockerFile追加してdockerでもできるようにしてあります。
+使い方等は検索してがんばってください。
 
-npmenvで構築して、その後anyenvを導入した結果ごっちゃごちゃになった為
-原点に帰ってdockerでやりました。
+# install dependencies
+npm install
 
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+
+# run unit tests
+npm run unit
+
+# run e2e tests
+npm run e2e
+
+# run all tests
+npm test
 ```
