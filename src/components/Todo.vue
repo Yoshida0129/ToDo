@@ -14,29 +14,34 @@
       </div>
     </div>
     <table class='todoList'>
-      <tr>
-        <th class='select'>Select</th>
-        <th class='name'>Name</th>
-        <th class='status'><input type="button" v-on:click='sort("status")' value='Status'></th>
-      </tr>
-      <tr v-for="(item) in items" :key='item.title' class='record'>
-        <td class='select'>
-          <label>
-            <input type='checkbox' v-model=item.select>
-          </label>
-        </td>
-        <td class='name'>
-          {{ item.title }}
-        </td>
-        <td class='status'>
-          {{item.status}}
-        </td>
-      </tr>
+      <thead>
+        <tr>
+          <th class='select' v-on:click='sort("select")'>Select</th>
+          <th class='name' v-on:click='sort("title")'>Name</th>
+          <th class='status' v-on:click='sort("status")' >Status</th>
+        </tr>
+      </thead>
+      <draggable v-model='items' element='tbody'>
+        <tr v-for="(item , index) in items" :key='index' class='record'>
+          <td class='select'>
+            <label>
+              <input type='checkbox' v-model=item.select>
+            </label>
+          </td>
+          <td class='name'>
+            {{ item.title }}
+          </td>
+          <td class='status'>
+            {{item.status}}
+          </td>
+        </tr>
+      </draggable>
     </table>
   </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 /* eslint-disable */
 export default{
   name: 'todo',
@@ -48,6 +53,9 @@ export default{
   },
   mounted() {
     this.items = JSON.parse(localStorage.getItem('items')) || [];
+  },
+  components: {
+    draggable
   },
   methods: {
     saveItem: function(){
@@ -66,7 +74,7 @@ export default{
       var isChecked = this.items.filter(function(item){
         return item.select === true;
       })
-      for(var i=0;i<isChecked.length;i++){
+      for(var i=0;i<isChecked.length;i++){ 
         isChecked[i].status = text;
         isChecked[i].select = false;
       }
@@ -84,7 +92,7 @@ export default{
     },
     sort:function(column){
       this.items.sort(function(a,b){
-        return (a.status > b.status) ? -1:1;
+        return (a[column] > b[column]) ? -1:1;
       });
       this.saveItem();
     }
@@ -126,6 +134,12 @@ font-weight :inherit;
   display: flex;
   flex-direction: column;
   .todoList{
+    tr{
+      width:auto;
+    }
+    th{
+      cursor: cell;
+    }
     margin:0 5%;
     .select{
       width:20%;
@@ -148,11 +162,16 @@ font-weight :inherit;
       }      
       width: 20%;
     }
-    .record{
-      :hover{
-        background-color: #EEE;
+    .drag{
+      display:table-row;
+      width:auto;
+      .record{
+        :hover{
+          background-color: #EEE;
+        }
       }
     }
+    
     th{
       padding: 10px;
       border-bottom:solid 2px #CCC;
