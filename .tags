@@ -1,0 +1,8 @@
+html	/Users/yoshidatatsuya/projects/Fina_homework/index.html	/^<html>$/;"	function	line:2
+head	/Users/yoshidatatsuya/projects/Fina_homework/index.html	/^  <head>$/;"	function	line:3
+meta	/Users/yoshidatatsuya/projects/Fina_homework/index.html	/^    <meta charset="utf-8">$/;"	function	line:4
+meta	/Users/yoshidatatsuya/projects/Fina_homework/index.html	/^    <meta name="viewport" content="width=device-width,initial-scale=1.0">$/;"	function	line:5
+title	/Users/yoshidatatsuya/projects/Fina_homework/index.html	/^    <title>Todo<\/title>$/;"	function	line:6
+body	/Users/yoshidatatsuya/projects/Fina_homework/index.html	/^  <body>$/;"	function	line:8
+div	/Users/yoshidatatsuya/projects/Fina_homework/index.html	/^    <div id="app"><\/div>$/;"	function	line:9
+script	/Users/yoshidatatsuya/projects/Fina_homework/index.html	/^    <script src="https:\/\/cdn.jsdelivr.net\/npm\/vue\/dist\/vue.js"><\/script>$/;"	function	line:11
