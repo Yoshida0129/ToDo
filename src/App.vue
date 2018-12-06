@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <input type="button" class="menuBar" value="aaa">
+    <!-- <input type="button" class="menuBar" value="aaa"> -->
     <router-view/>
   </div>
 </template>
