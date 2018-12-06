@@ -7,7 +7,6 @@
         v-model="newItemTitle"
         v-on:keyup.enter="addTodo(newItemTitle)"
         name="addText"
-        value="a"
       >
       <div class="command">
         <input type="button" v-on:click="allClear()" value="AllClear">
@@ -117,10 +116,13 @@ textarea {
   input[type="text"] {
     margin: 1% 0 2% 0;
   }
-  input[type="button"] {
+  .command input {
     width: 10%;
     margin: 0.5%;
-    box-shadow: 0.5% 0.1% #ccc;
+    box-shadow: 2px 2px #ccc;
+    :hover {
+      background: #000;
+    }
   }
 }
 #todo {
