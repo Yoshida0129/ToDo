@@ -2,12 +2,10 @@
   <div id="todo">
     <h1>Todo-list</h1>
     <div class="container">
-      <input
-        type="text"
-        v-model="newItemTitle"
-        v-on:keyup.enter="addTodo(newItemTitle)"
-        name="addText"
-      >
+      <div class="input-item" v-on:keyup.enter="addTodo(newItemTitle)">
+        <input type="text" v-model="newItemTitle" name="addText" placeholder="入力してください">
+        <input type="button" @click="addTodo(newItemTitle)" value="+">
+      </div>
       <div class="command">
         <input type="button" v-on:click="allClear()" value="AllClear">
         <input type="button" v-on:click="removeTodo()" value="SelectRemove">
@@ -116,13 +114,16 @@ textarea {
   input[type="text"] {
     margin: 1% 0 2% 0;
   }
-  .command input {
+  input[type="button"] {
     width: 10%;
     margin: 0.5%;
     box-shadow: 2px 2px #ccc;
-    :hover {
-      background: #000;
-    }
+  }
+  .input-item input[type="button"]{
+    width:2%;
+  }
+  .input-item input[type="text"]{
+    width:13%;
   }
 }
 #todo {
