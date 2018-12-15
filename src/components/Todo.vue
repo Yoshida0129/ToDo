@@ -2,7 +2,7 @@
   <div id="todo">
     <h1>Todo-list</h1>
     <div class="container">
-      <div class="input-item" v-on:keyup.enter="addTodo(newItemTitle)">
+      <div class="input-item" >
         <input type="text" v-model="newItemTitle" name="addText" placeholder="入力してください">
         <input type="button" @click="addTodo(newItemTitle)" value="+">
       </div>
